@@ -30,8 +30,8 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 h-16 flex items- z-50 transition ease-out  duration-200 text-white",
-        pathname !== "/" && "bg-white text-black",
+        "fixed inset-x-0 top-0 h-16 flex items- z-50 transition ease-out bg-white  duration-200 text-white",
+        (pathname === "/blog" || "/") && "bg-transparent",
         isScrollTop &&
           "bg-black/20 dark:bg-black/30 backdrop-blur-lg text-white"
       )}
@@ -50,7 +50,7 @@ export const Header = () => {
               alt="logo"
               className={cn(
                 "object-cover",
-                pathname === "/" && "invert",
+                (pathname === "/blog" || "/") && "invert",
                 isScrollTop && "invert"
               )}
             />
