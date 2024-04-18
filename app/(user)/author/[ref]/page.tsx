@@ -1,45 +1,63 @@
-import { PostBanner } from "@/components/post-banner";
-import { PostPagination } from "@/components/post-pagination";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
-import { postsQuery, queryCount } from "@/sanity/lib/queries";
-import { SanityDocument, groq } from "next-sanity";
+import { authorQuery, postsByRef } from "@/sanity/lib/queries";
+import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-export const revalidate = 30;
-
-async function getData(perPage: number, page: number) {
-  const start = perPage * (page - 1);
-  const end = start + perPage;
-  const posts: SanityDocument[] = await client.fetch(postsQuery, {
-    start,
-    end,
-  });
-  const itemCount = await client.fetch(queryCount);
-  return { posts, itemCount };
-}
+import { SocialIcon } from "react-social-icons";
 
 type Props = {
-  searchParams: {
-    page: string;
+  params: {
+    ref: string;
   };
 };
-
-const BlogPage = async ({ searchParams }: Props) => {
-  let page = parseInt(searchParams.page, 10);
-  page = !page || page < 1 ? 1 : page;
-  const perPage = 3;
-  const { posts, itemCount } = await getData(perPage, page);
-  const totalPages = Math.ceil(itemCount / perPage);
+export const revalidate = 30;
+const AuthorPage = async ({ params }: Props) => {
+  const author = await client.fetch(authorQuery, {
+    ref: params.ref,
+  });
+  const posts: SanityDocument[] = await client.fetch(postsByRef, {
+    ref: params.ref,
+  });
   return (
     <div className="">
-      <PostBanner posts={posts} />
-      <div className="max-w-6xl mx-auto px-5 py-10">
-        <h2 className="uppercase font-semibold text-xl tracking-wider pb-4">
-          Latest Article
+      <div className="w-full h-16 bg-red-900" />
+      <div className="bg-[#e5e5e5]">
+        <div className="mx-auto max-w-3xl py-6 flex flex-col items-center justify-center space-y-6 px-3">
+          <div className="flex items-center space-x-2">
+            <div className="relative h-12 w-12">
+              <Image
+                alt={author.name}
+                src={urlForImage(author.image)}
+                fill
+                className="object-cover rounded-full"
+              />
+            </div>
+            <div className="flex flex-col text-sm">
+              <h4 className="font-semibold text-lg">{author.name}</h4>
+              <p>{author.role}</p>
+            </div>
+          </div>
+          <p className="text-center">{author.bio}</p>
+          <div className="flex gap-x-2">
+            {author.socialLinks.map((link: any) => (
+              <SocialIcon
+                key={link._key}
+                url={link.link}
+                style={{
+                  width: "1.9rem",
+                  height: "1.9rem",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="max-w-6xl mx-auto px-3 py-10">
+        <h2 className="capitalize font-semibold text-xl tracking-wider pb-4">
+          Article from author:
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {posts.map((post) => (
@@ -83,11 +101,9 @@ const BlogPage = async ({ searchParams }: Props) => {
             </Link>
           ))}
         </div>
-
-        <PostPagination />
       </div>
     </div>
   );
 };
 
-export default BlogPage;
+export default AuthorPage;

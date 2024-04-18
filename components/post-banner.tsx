@@ -33,7 +33,7 @@ export const PostBanner = ({ posts }: Props) => {
         align: "start",
         loop: true,
       }}
-      className="w-full bg-black/80"
+      className="w-full bg-black"
     >
       <CarouselContent className="">
         {posts.map((value) => (
@@ -42,25 +42,27 @@ export const PostBanner = ({ posts }: Props) => {
             className="md:h-[30rem] h-[20rem] relative flex justify-center items-center"
           >
             <div
-              className="absolute inset-x-0 h-full opacity-50 w-full bg-cover bg-center z-[-5]"
+              className="absolute inset-x-0 h-full opacity-50 w-full bg-cover bg-center"
               style={{
                 backgroundImage: `url(${urlForImage(value.mainImage)})`,
               }}
             />
-            <div className="w-full h-full">
+            <div className="w-full h-full z-10">
               <div className="max-w-6xl mx-auto h-full flex flex-col justify-center px-4 text-white xl:px-4 lg:px-14 gap-y-4 pt-8">
-                {value.category.map((cat: any) => (
-                  <Button
-                    key={cat.slug.current}
-                    size="sm"
-                    asChild
-                    className="bg-red-900 w-fit"
-                  >
-                    <Link href={`/category/${cat.slug.current}`}>
-                      {cat.title}
-                    </Link>
-                  </Button>
-                ))}
+                <div className="flex space-x-2">
+                  {value.category.map((cat: any) => (
+                    <Button
+                      key={cat.slug.current}
+                      size="sm"
+                      asChild
+                      className="bg-red-900 w-fit"
+                    >
+                      <Link href={`/category/${cat.slug.current}`}>
+                        {cat.title}
+                      </Link>
+                    </Button>
+                  ))}
+                </div>
                 <Link href={`/post/${value.slug.current}`}>
                   <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold capitalize w-full max-w-4xl">
                     {value.title}

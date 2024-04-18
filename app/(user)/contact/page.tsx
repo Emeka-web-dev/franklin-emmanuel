@@ -4,8 +4,8 @@ import React from "react";
 
 const ContactPage = () => {
   return (
-    <article className="pt-16">
-      <div className="py-12 bg-[#781319] border-y-white text-white border-y">
+    <article className="">
+      <div className="py-12 bg-[#781319] pt-20 border-y-white text-white border-y">
         <h3 className="text-center text-3xl sm:text-4xl md:text-6xl lg:text-7xl pb-4 md:pb-6 font-bold capitalize">
           Contact us
         </h3>

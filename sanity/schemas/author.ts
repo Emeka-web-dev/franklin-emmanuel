@@ -11,33 +11,34 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "role",
+      title: "Role",
+      type: "string",
+    }),
+    defineField({
       name: "image",
       title: "Image",
       type: "image",
-      options: {
-        hotspot: true,
-      },
-      fields: [
+    }),
+    defineField({
+      name: "bio",
+      title: "Bio",
+      type: "text",
+    }),
+    defineField({
+      name: "socialLinks",
+      title: "Social Links",
+      type: "array",
+      of: [
         {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
+          type: "object",
+          fields: [
+            { type: "string", name: "name" },
+            { type: "string", name: "link" },
+          ],
         },
       ],
     }),
-    // defineField({
-    //   name: 'bio',
-    //   title: 'Bio',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       title: 'Block',
-    //       type: 'block',
-    //       styles: [{title: 'Normal', value: 'normal'}],
-    //       lists: [],
-    //     },
-    //   ],
-    // }),
   ],
   preview: {
     select: {

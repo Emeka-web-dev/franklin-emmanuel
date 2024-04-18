@@ -7,7 +7,7 @@ export const RichTextComponents = {
     image: ({ value }: any) => {
       return (
         <div className="mb-5">
-          <div className="relative w-full h-72  md:h-96 mx-auto">
+          <div className="relative w-full h-64 md:h-96 mx-auto">
             <Image
               className="object-contain"
               src={urlForImage(value)}
@@ -15,7 +15,7 @@ export const RichTextComponents = {
               fill
             />
           </div>
-          <p className="italic text-center text-gray-700 dark:text-white text-sm">
+          <p className="italic text-center text-gray-700 text-sm">
             {value.alt}
           </p>
         </div>
@@ -44,7 +44,7 @@ export const RichTextComponents = {
       <h4 className="text-2xl py-3 font-bold">{children}</h4>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-[#6e5112] border-l-4 pl-5 py-1 my-2 italic">
+      <blockquote className="border-l-red-900 border-l-4 pl-5 py-1 my-2 italic">
         {children}
       </blockquote>
     ),
