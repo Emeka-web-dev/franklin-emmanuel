@@ -18,9 +18,9 @@ type Props = {
 };
 
 export const PostBanner = ({ posts }: Props) => {
-  //   posts.map((post) => {
-  //     console.log({ title: post.title, category: post.category });
-  //   });
+  // posts.map((post) => {
+  //   console.log({ title: post.title, author: post.author });
+  // });
   return (
     <Carousel
       plugins={[
@@ -63,13 +63,16 @@ export const PostBanner = ({ posts }: Props) => {
                     </Button>
                   ))}
                 </div>
-                <Link href={`/post/${value.slug.current}`}>
+                <Link href={`/blog/${value.slug.current}`}>
                   <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold capitalize w-full max-w-4xl">
                     {value.title}
                   </h2>
                 </Link>
                 <div className="flex space-x-4 items-center">
-                  <div className="flex space-x-2 items-center">
+                  <Link
+                    href={`/author/${value.author._id}`}
+                    className="flex space-x-2 items-center"
+                  >
                     <div className="relative h-8 w-8">
                       <Image
                         alt={value.author.name}
@@ -79,7 +82,7 @@ export const PostBanner = ({ posts }: Props) => {
                       />
                     </div>
                     <p>{value.author.name}</p>
-                  </div>
+                  </Link>
                   <div>
                     {new Date(value._createdAt).toLocaleDateString("en-US", {
                       day: "numeric",

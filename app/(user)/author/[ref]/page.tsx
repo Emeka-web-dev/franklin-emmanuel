@@ -1,26 +1,54 @@
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
-import { authorQuery, postsByRef } from "@/sanity/lib/queries";
+import {
+  authorQuery,
+  authorQueryCount,
+  postsByRef,
+} from "@/sanity/lib/queries";
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { SocialIcon } from "react-social-icons";
+import { getData } from "../../blog/page";
+import { PostPagination } from "@/components/post-pagination";
 
 type Props = {
   params: {
     ref: string;
   };
+  searchParams: {
+    page: string;
+  };
 };
 export const revalidate = 30;
-const AuthorPage = async ({ params }: Props) => {
+const AuthorPage = async ({ params, searchParams }: Props) => {
+  let page = parseInt(searchParams.page, 10);
+  page = !page || page < 1 ? 1 : page;
+  const perPage = 12;
   const author = await client.fetch(authorQuery, {
     ref: params.ref,
   });
-  const posts: SanityDocument[] = await client.fetch(postsByRef, {
+
+  const itemCount = await client.fetch(authorQueryCount, {
     ref: params.ref,
   });
+
+  const posts = await getData(perPage, page, postsByRef, params.ref);
+
+  const totalPages = Math.ceil(itemCount / perPage);
+  const prevPage = page - 1 > 0 ? page - 1 : 1;
+  const nextPage = page + 1;
+  const isPageOutOfRange = page > totalPages;
+
+  const pageNumbers = [];
+  const offsetNumber = 3;
+  for (let i = page - offsetNumber; i <= page + offsetNumber; i++) {
+    if (i >= 1 && i <= totalPages) {
+      pageNumbers.push(i);
+    }
+  }
   return (
     <div className="">
       <div className="w-full h-16 bg-red-900" />
@@ -101,6 +129,14 @@ const AuthorPage = async ({ params }: Props) => {
             </Link>
           ))}
         </div>
+        <PostPagination
+          isPageOutOfRange={isPageOutOfRange}
+          page={page}
+          pageNumbers={pageNumbers}
+          totalPages={totalPages}
+          prevPage={prevPage}
+          nextPage={nextPage}
+        />
       </div>
     </div>
   );

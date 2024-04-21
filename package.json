@@ -30,6 +30,7 @@
     "react-hook-form": "^7.51.2",
     "react-social-icons": "^6.15.0",
     "sanity": "^3.35.2",
+    "sanity-plugin-singleton-tools": "^1.0.1",
     "sonner": "^1.4.41",
     "styled-components": "^6.1.8",
     "tailwind-merge": "^2.2.2",

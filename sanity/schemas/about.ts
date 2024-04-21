@@ -4,6 +4,9 @@ export default defineType({
   name: "about",
   title: "About",
   type: "document",
+  options: {
+    singleton: true,
+  },
   fields: [
     defineField({
       name: "name",
@@ -27,9 +30,9 @@ export default defineType({
           type: "object",
           fields: [
             { type: "string", name: "name" },
-            { type: "string", name: "link" }
-          ]
-        }
+            { type: "string", name: "link" },
+          ],
+        },
       ],
     }),
     defineField({
@@ -37,9 +40,9 @@ export default defineType({
       title: "Address",
       type: "object",
       fields: [
-        {name: 'street', type: 'string', title: 'Street name'},
-        {name: 'city', type: 'string', title: 'City'}
-      ]
+        { name: "street", type: "string", title: "Street name" },
+        { name: "city", type: "string", title: "City" },
+      ],
     }),
 
     defineField({

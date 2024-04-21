@@ -73,9 +73,6 @@ export const Header = () => {
           <Button size="icon" variant="ghost" className="hidden md:flex">
             <Search className="w-5 h-5" />
           </Button>
-          <div className="">
-            <ModeToggle />
-          </div>
           <div className="flex md:hidden">
             <Button variant="ghost" size="icon" onClick={onOpen}>
               <AlignRight className="w-5 h-5" />

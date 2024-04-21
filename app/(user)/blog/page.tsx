@@ -11,15 +11,20 @@ import React from "react";
 
 export const revalidate = 30;
 
-async function getData(perPage: number, page: number) {
+export async function getData(
+  perPage: number,
+  page: number,
+  query: string,
+  ref?: string
+) {
   const start = perPage * (page - 1);
   const end = start + perPage;
-  const posts: SanityDocument[] = await client.fetch(postsQuery, {
+  const posts: SanityDocument[] = await client.fetch(query, {
     start,
     end,
+    ref: ref ? ref : "",
   });
-  const itemCount = await client.fetch(queryCount);
-  return { posts, itemCount };
+  return posts;
 }
 
 type Props = {
@@ -31,15 +36,35 @@ type Props = {
 const BlogPage = async ({ searchParams }: Props) => {
   let page = parseInt(searchParams.page, 10);
   page = !page || page < 1 ? 1 : page;
-  const perPage = 3;
-  const { posts, itemCount } = await getData(perPage, page);
+  const perPage = 12;
+
+  const itemCount = await client.fetch(queryCount);
+
+  const posts = await getData(perPage, page, postsQuery);
+  const banner = await client.fetch(postsQuery, {
+    start: 0,
+    end: 3,
+  });
   const totalPages = Math.ceil(itemCount / perPage);
+
+  const prevPage = page - 1 > 0 ? page - 1 : 1;
+  const nextPage = page + 1;
+  const isPageOutOfRange = page > totalPages;
+
+  const pageNumbers = [];
+  const offsetNumber = 3;
+  for (let i = page - offsetNumber; i <= page + offsetNumber; i++) {
+    if (i >= 1 && i <= totalPages) {
+      pageNumbers.push(i);
+    }
+  }
+
   return (
     <div className="">
-      <PostBanner posts={posts} />
+      <PostBanner posts={banner} />
       <div className="max-w-6xl mx-auto px-5 py-10">
         <h2 className="uppercase font-semibold text-xl tracking-wider pb-4">
-          Latest Article
+          {page > 1 ? "other articles" : "latest articles"}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {posts.map((post) => (
@@ -83,8 +108,14 @@ const BlogPage = async ({ searchParams }: Props) => {
             </Link>
           ))}
         </div>
-
-        <PostPagination />
+        <PostPagination
+          isPageOutOfRange={isPageOutOfRange}
+          page={page}
+          pageNumbers={pageNumbers}
+          totalPages={totalPages}
+          prevPage={prevPage}
+          nextPage={nextPage}
+        />
       </div>
     </div>
   );
