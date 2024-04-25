@@ -207,7 +207,7 @@ export const ScheduleForm = () => {
                 <FormControl>
                   <Input
                     placeholder="Eg. www.spotex.com"
-                    type="tel"
+                    type="text"
                     {...field}
                   />
                 </FormControl>
