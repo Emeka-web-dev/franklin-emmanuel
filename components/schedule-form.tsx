@@ -239,7 +239,7 @@ export const ScheduleForm = () => {
           type="submit"
           size="lg"
           disabled={isLoading}
-          className="text-lg font-semibold text-white bg-red-800 hover:bg-white hover:text-red-800 border-red-800 border-2 mt-14 w-32"
+          className="text-lg font-semibold text-white bg-red-800 hover:bg-white hover:text-red-800 border-red-800 border-2 mt-14 w-32 disabled:bg-red-800/75"
         >
           {isLoading ? <Spinner className="text-white" /> : "Submit"}
         </Button>
