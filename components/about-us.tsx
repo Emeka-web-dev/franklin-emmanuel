@@ -19,7 +19,7 @@ export const AboutUs = ({ about }: Props) => {
         <h3 className="font-semibold text-3xl">{about.bioHeader}</h3>
         <PortableText components={RichTextComponents} value={about.bio} />
       </div>
-      <FramerAnimate className="relative flex-shrink-0 w-[30rem] h-[36rem] lg:mt-10 mx-2">
+      <FramerAnimate className="relative flex-shrink-0 max-w-[28rem] w-[95%] h-[36rem] lg:mt-10 mx-auto">
         <Image
           src={urlForImage(about.bioImage)}
           alt="about image"
