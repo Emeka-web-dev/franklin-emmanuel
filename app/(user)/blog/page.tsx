@@ -87,14 +87,13 @@ const BlogPage = async ({ searchParams }: Props) => {
                         key={i}
                         className="w-fit text-xs p-1 text-red-900"
                       >
-                        {/* <Link
+                        <Link
                           href={`/category/${cat.slug.current}`}
                           className=""
                         >
-                        </Link> */}
-                        {cat.title}
+                          {cat.title}
+                        </Link>
                       </Button>
-                      // <p key={cat.slug.current}>{cat.title}</p>
                     ))}
                   </div>
                   <p className="text-sm md:text-base capitalize">

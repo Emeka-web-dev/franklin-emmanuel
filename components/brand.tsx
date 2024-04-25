@@ -1,14 +1,8 @@
 "use client";
-import Image from "next/image";
-import AutoPlay from "embla-carousel-autoplay";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "./ui/carousel";
 import { urlForImage } from "@/sanity/lib/image";
+import AutoPlay from "embla-carousel-autoplay";
+import Image from "next/image";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 
 type Props = {
   brands: [
@@ -56,8 +50,6 @@ export const Brand = ({ brands }: Props) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          {/* <CarouselPrevious />
-          <CarouselNext /> */}
         </Carousel>
       </div>
     </div>

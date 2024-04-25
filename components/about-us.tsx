@@ -1,9 +1,8 @@
-import Image from "next/image";
-import FramerContainer from "./provider/framer-container";
-import { PortableText } from "@portabletext/react";
-import { RichTextComponents } from "./rich-text-component";
 import { urlForImage } from "@/sanity/lib/image";
+import { PortableText } from "@portabletext/react";
+import Image from "next/image";
 import { FramerAnimate } from "./provider/framer-animate";
+import { RichTextComponents } from "./rich-text-component";
 
 type Props = {
   about: {

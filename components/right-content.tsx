@@ -1,8 +1,5 @@
 "use client";
-// import { useStore } from '@/hooks/atom';
-import { SanityDocument } from "next-sanity";
 import Link from "next/link";
-import React from "react";
 import { SocialIcon } from "react-social-icons";
 
 type RelatedArticleProps = {
@@ -12,7 +9,6 @@ type RelatedArticleProps = {
   title: string;
 };
 function RightContent({ post }: any) {
-  // const name = useStore((state) => state.name);
   return (
     <div className="col-span-10 md:col-span-3 border-l border-l-border pt-14 md:pb-8 px-6 flex flex-col justify-between">
       <div className="space-y-3 hidden md:flex flex-col">

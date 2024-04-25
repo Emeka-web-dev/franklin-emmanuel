@@ -1,3 +1,4 @@
+import { PostPagination } from "@/components/post-pagination";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
@@ -6,13 +7,10 @@ import {
   authorQueryCount,
   postsByRef,
 } from "@/sanity/lib/queries";
-import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { SocialIcon } from "react-social-icons";
 import { getData } from "../../blog/page";
-import { PostPagination } from "@/components/post-pagination";
 
 type Props = {
   params: {
@@ -22,7 +20,7 @@ type Props = {
     page: string;
   };
 };
-export const revalidate = 30;
+export const revalidate = 60;
 const AuthorPage = async ({ params, searchParams }: Props) => {
   let page = parseInt(searchParams.page, 10);
   page = !page || page < 1 ? 1 : page;

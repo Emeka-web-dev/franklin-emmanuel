@@ -1,6 +1,10 @@
 "use client";
-import { SanityDocument } from "next-sanity";
+import { urlForImage } from "@/sanity/lib/image";
 import AutoPlay from "embla-carousel-autoplay";
+import { SanityDocument } from "next-sanity";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "./ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -8,19 +12,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { urlForImage } from "@/sanity/lib/image";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "./ui/button";
 
 type Props = {
   posts: SanityDocument[];
 };
 
 export const PostBanner = ({ posts }: Props) => {
-  // posts.map((post) => {
-  //   .log({ title: post.title, author: post.author });
-  // });
   return (
     <Carousel
       plugins={[

@@ -50,9 +50,6 @@ export const PostPagination = ({
           </PaginationItem>
         ))}
 
-        {/* <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem> */}
         <PaginationItem>
           <PaginationNext
             href={`?page=${nextPage}`}

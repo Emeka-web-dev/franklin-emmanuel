@@ -1,7 +1,5 @@
 import { Header } from "@/components/header";
-import { Spinner } from "@/components/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
-import React from "react";
 
 const LoadingPage = () => {
   return (

@@ -1,4 +1,3 @@
-import { ArrowDownZA } from "lucide-react";
 import { MasteryCard } from "./mastery-card";
 
 type Props = {

@@ -1,3 +1,4 @@
+import { PostPagination } from "@/components/post-pagination";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
@@ -10,9 +11,7 @@ import {
 import { SanityDocument } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { getData } from "../../blog/page";
-import { PostPagination } from "@/components/post-pagination";
 
 type Props = {
   searchParams: {

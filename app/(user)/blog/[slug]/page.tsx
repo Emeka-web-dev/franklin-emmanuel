@@ -1,12 +1,11 @@
 import { RichTextComponents } from "@/components/rich-text-component";
+import RightContent from "@/components/right-content";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
 import { postQuery } from "@/sanity/lib/queries";
-import { SanityDocument } from "next-sanity";
 import { PortableText } from "@portabletext/react";
+import { SanityDocument } from "next-sanity";
 import Image from "next/image";
-import React from "react";
-import RightContent from "@/components/right-content";
 import Link from "next/link";
 
 type Props = {
