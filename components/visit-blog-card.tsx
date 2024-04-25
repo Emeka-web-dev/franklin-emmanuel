@@ -1,8 +1,7 @@
+import { ChevronsRight } from "lucide-react";
 import Image from "next/image";
-import { Button } from "./ui/button";
 import Link from "next/link";
-import { ChevronRight, ChevronsRight } from "lucide-react";
-import { FramerAnimate } from "./provider/framer-animate";
+import { Button } from "./ui/button";
 
 type VisitBlogCardType = {
   imageUrl: string;
@@ -17,7 +16,7 @@ export const VisitBlogCard = ({
   slug,
 }: VisitBlogCardType) => {
   return (
-    <div className="max-w-80 mx-auto w-full flex flex-col bg-white rounded-lg overflow-hidden">
+    <div className="w-full max-w-[30rem] mx-auto flex flex-col bg-white rounded-lg overflow-hidden">
       <div className="relative w-full h-48">
         <Image src={imageUrl} alt="blog image" fill className="object-cover" />
       </div>

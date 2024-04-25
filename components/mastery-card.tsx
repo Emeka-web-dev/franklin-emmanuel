@@ -1,4 +1,3 @@
-import { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { FramerAnimate } from "./provider/framer-animate";
 
@@ -13,8 +12,7 @@ export const MasteryCard = ({
   description,
 }: MasteryCardProps) => {
   return (
-    <FramerAnimate className="text-center flex flex-col items-center justify-center px-4 py-8 bg-white shadow-xl rounded-lg max-w-80 md:max-w-96 mx-auto space-y-2">
-      {/* <Icon className="w-28 h-28 text-red-800" /> */}
+    <FramerAnimate className="text-center flex flex-col items-center justify-center px-4 py-8 bg-white shadow-xl rounded-lg w-full max-w-[30rem] mx-auto space-y-2">
       <div className="relative w-28 h-28">
         <Image src={imageUrl} alt="mastery image" fill />
       </div>
