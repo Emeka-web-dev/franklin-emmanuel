@@ -27,6 +27,7 @@ import { searchQuery } from "@/sanity/lib/queries";
 import Link from "next/link";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
+import { set } from "sanity";
 
 type ItemProp = {
   title: string;
@@ -49,7 +50,7 @@ export const SearchPostModal = () => {
 
   useEffect(() => {
     if (!isOpen) {
-      setInput("");
+      //   setInput("");
       setItems([]);
     }
   }, [isOpen]);
@@ -65,32 +66,33 @@ export const SearchPostModal = () => {
   //     return () => clearTimeout(delayDebounceFn);
   //   }, [input]);
   const isModalOpen = isOpen && type === "search";
-  //   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     const posts: ItemProp[] = await client.fetch(searchQuery, {
-  //       value: input,
-  //       start: 0,
-  //       end: 6,
-  //     });
-  //     setItems(posts);
-  //     setIsLoading(false);
-  //   };
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    const value = event.target.value;
-    if (value.length < 3) return;
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
     const posts: ItemProp[] = await client.fetch(searchQuery, {
-      value,
+      value: input,
       start: 0,
-      end: 10,
+      end: 6,
     });
     setItems(posts);
     setIsLoading(false);
   };
+  //   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  //     event.stopPropagation();
+  //     const value = event.target.value;
+  //     if (value.length < 3) return;
+  //     setIsLoading(true);
+  //     const posts: ItemProp[] = await client.fetch(searchQuery, {
+  //       value,
+  //       start: 0,
+  //       end: 10,
+  //     });
+  //     setItems(posts);
+  //     setIsLoading(false);
+  //   };
   return (
     <CommandDialog open={isModalOpen} onOpenChange={onClose}>
-      <div className="flex items-center border-b px-3">
+      <form onSubmit={onSubmit} className="flex items-center border-b px-3">
         {isLoading ? (
           <RotateCw className="mr-2 h-4 w-4 shrink-0 opacity-50 animate-spin" />
         ) : (
@@ -98,11 +100,14 @@ export const SearchPostModal = () => {
         )}
         <Input
           placeholder="Search posts, authors..."
-          onChange={handleChange}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           className="flex h-11 w-full rounded-md bg-transparent py-3 outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none ring-offset-0 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
         />
-        {/* <button ref={submitBtnRef} type="submit" className="hidden" /> */}
-      </div>
+        <button ref={submitBtnRef} type="submit" className="mr-4">
+          submit
+        </button>
+      </form>
       <CommandList>
         <CommandGroup className="max-h-72 overflow-y-auto">
           {items.length == 0 && (
