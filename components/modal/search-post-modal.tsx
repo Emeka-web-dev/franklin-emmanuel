@@ -21,7 +21,7 @@ import {
 import { on } from "events";
 import { RotateCw, Search } from "lucide-react";
 import { Input } from "../ui/input";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { searchQuery } from "@/sanity/lib/queries";
 import Link from "next/link";
@@ -54,43 +54,55 @@ export const SearchPostModal = () => {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (!input?.trim()) return;
+  //   useEffect(() => {
+  //     if (!input?.trim()) return;
 
-    const delayDebounceFn = setTimeout(() => {
-      setIsLoading(true);
-      submitBtnRef?.current?.click();
-    }, 500);
+  //     const delayDebounceFn = setTimeout(() => {
+  //       setIsLoading(true);
+  //       submitBtnRef?.current?.click();
+  //     }, 500);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [input]);
+  //     return () => clearTimeout(delayDebounceFn);
+  //   }, [input]);
   const isModalOpen = isOpen && type === "search";
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  //   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     const posts: ItemProp[] = await client.fetch(searchQuery, {
+  //       value: input,
+  //       start: 0,
+  //       end: 6,
+  //     });
+  //     setItems(posts);
+  //     setIsLoading(false);
+  //   };
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    const value = event.target.value;
+    if (value.length < 3) return;
+    setIsLoading(true);
     const posts: ItemProp[] = await client.fetch(searchQuery, {
-      value: input,
+      value,
       start: 0,
-      end: 6,
+      end: 10,
     });
     setItems(posts);
     setIsLoading(false);
   };
   return (
     <CommandDialog open={isModalOpen} onOpenChange={onClose}>
-      <form onSubmit={onSubmit} className="flex items-center border-b px-3">
+      <div className="flex items-center border-b px-3">
         {isLoading ? (
           <RotateCw className="mr-2 h-4 w-4 shrink-0 opacity-50 animate-spin" />
         ) : (
           <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         )}
         <Input
-          value={input}
           placeholder="Search posts, authors..."
-          onChange={(e) => setInput(e.target.value)}
+          onChange={handleChange}
           className="flex h-11 w-full rounded-md bg-transparent py-3 outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none ring-offset-0 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
         />
-        <button ref={submitBtnRef} type="submit" className="hidden" />
-      </form>
+        {/* <button ref={submitBtnRef} type="submit" className="hidden" /> */}
+      </div>
       <CommandList>
         <CommandGroup className="max-h-72 overflow-y-auto">
           {items.length == 0 && (
