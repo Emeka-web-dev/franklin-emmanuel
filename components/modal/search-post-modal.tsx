@@ -23,12 +23,25 @@ import { RotateCw, Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { client } from "@/sanity/lib/client";
-import { searchQuery } from "@/sanity/lib/queries";
+// import { searchQuery } from "@/sanity/lib/queries";
 import Link from "next/link";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
 import { set } from "sanity";
-
+import { groq } from "next-sanity";
+const searchQuery = groq`
+ *[_type == "post" && title match $value + "*" || author._ref in *[_type == "author" && name match $value + "*"]._id ] | order(title desc, author desc)[$start...$end]{
+  title,
+     _id,
+     slug {
+     current
+     },
+   mainImage,
+   author->{     
+     name
+   }
+ }
+`;
 type ItemProp = {
   title: string;
   slug: {
