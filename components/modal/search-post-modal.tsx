@@ -30,7 +30,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import { set } from "sanity";
 import { groq } from "next-sanity";
 const searchQuery = groq`
- *[_type == "post" && title match $value + "*" || author._ref in *[_type == "author" && name match $value + "*"]._id ] | order(title desc, author desc)[$start...$end]{
+ *[_type == "post" && title match $value + "*"] | order(_createdAt desc)[$start...$end]{
   title,
      _id,
      slug {
