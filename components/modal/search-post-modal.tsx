@@ -164,7 +164,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { useModalStore } from "@/hooks/useModalStore";
 const query = groq`
-    *[_type == "post" && title match $value] | order(_createdAt desc){
+    *[_type == "post" && title match $value + "*"] | order(_createdAt desc){
   title,
     slug,
     _id,
