@@ -16,11 +16,11 @@ export default async function Home() {
   const bannerImage = urlForImage(home.bannerImage);
   return (
     <div>
-      {/* <Banner
+      <Banner
         title={home.title}
         caption={home.caption}
         bannerImage={bannerImage}
-      /> */}
+      />
       <AboutUs about={home.about} />
       <Mastery mastery={home.mastery} />
       <VisitBlog />
