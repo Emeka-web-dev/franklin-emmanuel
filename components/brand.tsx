@@ -8,17 +8,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { urlForImage } from "@/sanity/lib/image";
 
-const brandImages = [
-  "/brand/digital-business.png",
-  "/brand/gorgeous.png",
-  "/brand/kitso.png",
-  "/brand/kjk-africa.png",
-  "/brand/tecom.png",
-  "/brand/vanguard.png",
-  "/brand/zircon.png",
-];
-export const Brand = () => {
+type Props = {
+  brands: [
+    {
+      image: any;
+      name: string;
+      _key: string;
+    }
+  ];
+};
+export const Brand = ({ brands }: Props) => {
   return (
     <div className="py-10 px-2 bg-[#f8f8f8]">
       <div className="max-w-5xl mx-auto">
@@ -39,13 +40,18 @@ export const Brand = () => {
           className="w-full py-4"
         >
           <CarouselContent>
-            {brandImages.map((value, index) => (
+            {brands.map((value) => (
               <CarouselItem
-                key={index}
+                key={value._key}
                 className="basis-1/2 sm:basis-1/3 lg:basis-1/4 flex items-center justify-center"
               >
                 <div className="p-1 cursor-grab">
-                  <Image src={value} width={150} height={150} alt="brand" />
+                  <Image
+                    src={urlForImage(value.image)}
+                    width={150}
+                    height={150}
+                    alt="brand"
+                  />
                 </div>
               </CarouselItem>
             ))}

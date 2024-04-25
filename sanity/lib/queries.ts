@@ -15,7 +15,12 @@ export const postsQuery = groq`
     category[] -> {
       title,  
       slug    
+    },
+    body[][0]{
+    children[][0]{
+      text
     }
+  }
   }`;
 
 export const categoryPostsQuery = groq`
@@ -91,6 +96,31 @@ export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
       mainImage,
     }
   }`;
+
+export const homeQuery = groq`
+    *[_type=="home"][0]
+  `;
+
+export const footerQuery = groq`
+  *[_type=="footer"][0]{
+  caption,
+    socialLinks
+}
+  `;
+
+export const searchQuery = groq`
+ *[_type == "post" && title match $value + "*" || author._ref in *[_type == "author" && name match $value + "*"]._id ] | order(title desc, author desc)[$start...$end]{
+  title,
+     _id,
+     slug {
+     current
+     },
+   mainImage,
+   author->{     
+     name
+   }
+ }
+`;
 
 export const queryCount = groq`
     count(*[_type == "post"])

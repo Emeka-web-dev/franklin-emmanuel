@@ -19,7 +19,7 @@ type Props = {
 
 export const PostBanner = ({ posts }: Props) => {
   // posts.map((post) => {
-  //   console.log({ title: post.title, author: post.author });
+  //   .log({ title: post.title, author: post.author });
   // });
   return (
     <Carousel

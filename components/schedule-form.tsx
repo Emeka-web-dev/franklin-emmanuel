@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-// import emailjs from "@emailjs/browser"
+import emailjs from "@emailjs/browser";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,9 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import { toast } from "sonner"
+import { toast } from "sonner";
 import { useState } from "react";
-// import { publicKey, serviceId, templateId } from "@/sanity/env"
+import { publicKey, serviceId, templateId } from "@/sanity/env";
 import { Spinner } from "./spinner";
 import {
   Select,
@@ -44,7 +44,7 @@ const formSchema = z.object({
   serviceOfInterst: z
     .string()
     .min(2, { message: "An option must be selected" }),
-  industry: z.string().min(2, { message: "An option must be selected" }),
+  industry: z.string().optional(),
   message: z.string().min(4, { message: "Message must be above 4 characters" }),
 });
 const soi = [
@@ -74,19 +74,31 @@ export const ScheduleForm = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
 
-    // emailjs.send(serviceId, templateId, {
-    //   name: values.fullName,
-    //   email: values.email,
-    //   phone: values.phone,
-    //   message: values.message,
-    // }, publicKey).then(() => {
-    //   toast.success("Successfully sent");
-    // }).catch(() => {
-    //   toast.error("Failed to send")
-    // }).finally(() => {
-    //   setIsLoading(false);
-    //   form.reset();
-    // })
+    emailjs
+      .send(
+        serviceId,
+        templateId,
+        {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          phone: values.phone,
+          serviceOfInterest: values.serviceOfInterst,
+          industry: values.industry,
+          message: values.message,
+        },
+        publicKey
+      )
+      .then(() => {
+        toast.success("Successfully sent");
+      })
+      .catch(() => {
+        toast.error("Failed to send");
+      })
+      .finally(() => {
+        setIsLoading(false);
+        form.reset();
+      });
   };
   return (
     <Form {...form}>
@@ -227,9 +239,9 @@ export const ScheduleForm = () => {
           type="submit"
           size="lg"
           disabled={isLoading}
-          className="text-lg font-semibold text-white bg-red-800 hover:bg-white hover:text-red-800 border-red-800 border-2 mt-14"
+          className="text-lg font-semibold text-white bg-red-800 hover:bg-white hover:text-red-800 border-red-800 border-2 mt-14 w-32"
         >
-          {isLoading ? <Spinner /> : "Submit"}
+          {isLoading ? <Spinner className="text-white" /> : "Submit"}
         </Button>
       </form>
     </Form>

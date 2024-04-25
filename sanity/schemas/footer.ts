@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "about",
-  title: "About",
+  name: "footer",
+  title: "Footer",
   type: "document",
   options: {
     singleton: true,
@@ -12,12 +12,12 @@ export default defineType({
       name: "name",
       title: "Name",
       readOnly: true,
-      initialValue: "About Think Plateau",
+      initialValue: "Franklin Emmanuel",
       type: "string",
     }),
     defineField({
-      name: "description",
-      title: "Description",
+      name: "caption",
+      title: "Caption",
       type: "text",
       rows: 6,
     }),
@@ -35,21 +35,21 @@ export default defineType({
         },
       ],
     }),
-    defineField({
-      name: "address",
-      title: "Address",
-      type: "object",
-      fields: [
-        { name: "street", type: "string", title: "Street name" },
-        { name: "city", type: "string", title: "City" },
-      ],
-    }),
+    // defineField({
+    //   name: "address",
+    //   title: "Address",
+    //   type: "object",
+    //   fields: [
+    //     { name: "street", type: "string", title: "Street name" },
+    //     { name: "city", type: "string", title: "City" },
+    //   ],
+    // }),
 
-    defineField({
-      name: "body",
-      title: "Body",
-      type: "blockContent",
-    }),
+    // defineField({
+    //   name: "body",
+    //   title: "Body",
+    //   type: "blockContent",
+    // }),
   ],
   preview: {
     select: {

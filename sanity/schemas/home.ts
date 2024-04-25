@@ -86,24 +86,11 @@ export default defineType({
       ],
     }),
     defineField({
-      name: "socialLinks",
-      title: "Social Links",
+      name: "youtubeIframe",
+      title: "Youtube Iframe",
       type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { type: "string", name: "name" },
-            { type: "string", name: "link" },
-          ],
-        },
-      ],
+      of: [{ type: "string" }],
     }),
-    // defineField({
-    //   name: "body",
-    //   title: "Body",
-    //   type: "blockContent",
-    // }),
   ],
   preview: {
     select: {

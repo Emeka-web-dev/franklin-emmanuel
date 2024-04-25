@@ -1,13 +1,13 @@
 "use client";
+import { useModalStore } from "@/hooks/useModalStore";
+import { useScrollTop } from "@/hooks/useScrollTop";
 import { cn } from "@/lib/utils";
+import { AlignRight, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
-import { AlignRight, Search } from "lucide-react";
-import { ModeToggle } from "./mode-toggle";
-import { useScrollTop } from "@/hooks/useScrollTop";
-import { useToggle } from "@/hooks/useToggle";
-import { usePathname, useRouter } from "next/navigation";
+import FramerContainer from "../provider/framer-container";
 
 export const navLinks = [
   {
@@ -26,12 +26,11 @@ export const navLinks = [
 export const Header = () => {
   const isScrollTop = useScrollTop();
   const pathname = usePathname();
-  const { onOpen } = useToggle();
+  const { onOpen } = useModalStore();
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 h-16 flex items- z-50 transition ease-out bg-white  duration-200 text-white",
-        (pathname === "/blog" || "/") && "bg-transparent",
+        "fixed inset-x-0 top-0 h-16 flex items- z-50 transition ease-out bg-transparent  duration-200 text-white",
         isScrollTop &&
           "bg-black/20 dark:bg-black/30 backdrop-blur-lg text-white"
       )}
@@ -39,7 +38,6 @@ export const Header = () => {
       <div
         className={cn(
           "max-w-7xl mx-auto px-4 w-full flex justify-between align-center"
-          //   isScrollTop && "text-black dark:text-white"
         )}
       >
         <Link href="/">
@@ -70,11 +68,20 @@ export const Header = () => {
           ))}
         </div>
         <div className="flex space-x-4 items-center">
-          <Button size="icon" variant="ghost" className="hidden md:flex">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="hidden md:flex"
+            onClick={() => onOpen("search")}
+          >
             <Search className="w-5 h-5" />
           </Button>
           <div className="flex md:hidden">
-            <Button variant="ghost" size="icon" onClick={onOpen}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onOpen("toggle")}
+            >
               <AlignRight className="w-5 h-5" />
             </Button>
           </div>

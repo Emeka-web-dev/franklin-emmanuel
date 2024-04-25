@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Roboto, Urbanist } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/provider/theme-provider";
 
 const inter = Urbanist({
   weight: ["300", "400", "700"],
@@ -20,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>{children}</body>
     </html>
   );

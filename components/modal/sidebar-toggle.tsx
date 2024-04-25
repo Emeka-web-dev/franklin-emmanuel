@@ -1,39 +1,30 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { navLinks } from "@/components/header";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
-import { useToggle } from "@/hooks/useToggle";
-import { Button } from "./ui/button";
-import { navLinks } from "@/components/header";
 import Link from "next/link";
+import { Button } from "../ui/button";
 // import { useSearch } from "@/hooks/useSearch";
-// import { useStore } from "@/hooks/atom";
+import { useStore } from "@/hooks/atom";
+import { useModalStore } from "@/hooks/useModalStore";
 import { SocialIcon } from "react-social-icons";
 
 export default function SideBarToggle() {
-  const { isOpen, onClose } = useToggle();
-  //   const { onOpen } = useSearch();
-  const [isMounted, setIsMounted] = useState(false);
-  //   const name = useStore((state) => state.name);
+  const { isOpen, onClose, type, onOpen } = useModalStore();
+  const name = useStore((state) => state.name);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  if (!isMounted) return;
-
+  const isModalOpen = isOpen && type === "toggle";
   const handleToggle = () => {
     onClose();
-    // onOpen();
+    onOpen("search");
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
+    <Sheet open={isModalOpen} onOpenChange={onClose}>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Franklin Emmanuel</SheetTitle>
@@ -58,8 +49,8 @@ export default function SideBarToggle() {
               </Link>
             ))}
           </div>
-          {/* <div className="flex space-x-5 pt-8">
-            {name.navLinks.map((link) => (
+          <div className="flex space-x-5 pt-8">
+            {name.socialLinks.map((link) => (
               <Link key={link._key} href={link.link} onClick={onClose}>
                 <SocialIcon
                   url={link.link}
@@ -70,7 +61,7 @@ export default function SideBarToggle() {
                 />
               </Link>
             ))}
-          </div> */}
+          </div>
         </div>
       </SheetContent>
     </Sheet>

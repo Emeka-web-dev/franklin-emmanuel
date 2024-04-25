@@ -24,6 +24,7 @@ export default defineType({
       name: "bio",
       title: "Bio",
       type: "text",
+      rows: 6,
     }),
     defineField({
       name: "socialLinks",

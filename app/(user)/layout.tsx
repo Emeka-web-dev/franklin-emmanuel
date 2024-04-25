@@ -1,18 +1,12 @@
-"use client";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import SideBarToggle from "@/components/sidebar-toggle";
+import { Layout } from "@/components/provider/layout";
+import { client } from "@/sanity/lib/client";
+import { footerQuery } from "@/sanity/lib/queries";
 import React from "react";
 
-const UserLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="relative min-h-[130vh]">
-      <Header />
-      <div className="">{children}</div>
-      <Footer />
-      <SideBarToggle />
-    </div>
-  );
+export const revalidate = 30;
+const UserLayout = async ({ children }: { children: React.ReactNode }) => {
+  const footer = await client.fetch(footerQuery);
+  return <Layout footer={footer}>{children}</Layout>;
 };
 
 export default UserLayout;

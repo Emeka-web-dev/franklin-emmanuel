@@ -2,21 +2,30 @@ import { AboutUs } from "@/components/about-us";
 import { Banner } from "@/components/banner";
 import { Brand } from "@/components/brand";
 import { Mastery } from "@/components/mastery";
-import { Schedule } from "@/components/schedule";
 import { VisitBlog } from "@/components/visit-blog";
 import { VisitChannel } from "@/components/visit-channel";
-import Image from "next/image";
+import { client } from "@/sanity/lib/client";
+import { urlForImage } from "@/sanity/lib/image";
+import { homeQuery } from "@/sanity/lib/queries";
+import { SanityDocument } from "next-sanity";
 
-export default function Home() {
+export const revalidate = 30;
+export default async function Home() {
+  const home: SanityDocument = await client.fetch(homeQuery);
+
+  const bannerImage = urlForImage(home.bannerImage);
   return (
     <div>
-      <Banner />
-      <AboutUs />
-      <Mastery />
+      <Banner
+        title={home.title}
+        caption={home.caption}
+        bannerImage={bannerImage}
+      />
+      <AboutUs about={home.about} />
+      <Mastery mastery={home.mastery} />
       <VisitBlog />
-      {/* <Schedule /> */}
-      <Brand />
-      <VisitChannel />
+      <Brand brands={home.brands} />
+      <VisitChannel channels={home.youtubeIframe} />
     </div>
   );
 }

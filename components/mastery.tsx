@@ -1,7 +1,14 @@
 import { ArrowDownZA } from "lucide-react";
 import { MasteryCard } from "./mastery-card";
 
-export const Mastery = () => {
+type Props = {
+  mastery: {
+    digitalProductsStrategy: string;
+    salesFunnels: string;
+    affiliateMarketing: string;
+  };
+};
+export const Mastery = ({ mastery }: Props) => {
   return (
     <div className=" py-10 px-3 bg-[#f8f8f8]">
       <div className="max-w-6xl mx-auto">
@@ -10,19 +17,19 @@ export const Mastery = () => {
         </h3>
         <div className="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <MasteryCard
-            icon={ArrowDownZA}
+            imageUrl="/strategy.png"
             header="Digital Products Strategy"
-            description="You want to create your own digital product? Be it an Online Course or Ebook or Productize your services.. Let’s map out systems that’d help you reach this goal of yours and get your products not just created but monetize them. Guess you never knew it was easy and fast..lol"
+            description={mastery.digitalProductsStrategy}
           />
           <MasteryCard
-            icon={ArrowDownZA}
-            header="Digital Products Strategy"
-            description="You want to create your own digital product? Be it an Online Course or Ebook or Productize your services.. Let’s map out systems that’d help you reach this goal of yours and get your products not just created but monetize them. Guess you never knew it was easy and fast..lol"
+            imageUrl="/affiliate.png"
+            header="Affiliate Marketing"
+            description={mastery.affiliateMarketing}
           />
           <MasteryCard
-            icon={ArrowDownZA}
-            header="Digital Products Strategy"
-            description="You want to create your own digital product? Be it an Online Course or Ebook or Productize your services.. Let’s map out systems that’d help you reach this goal of yours and get your products not just created but monetize them. Guess you never knew it was easy and fast..lol"
+            imageUrl="/sales.png"
+            header="Sales Funnel"
+            description={mastery.salesFunnels}
           />
         </div>
       </div>
