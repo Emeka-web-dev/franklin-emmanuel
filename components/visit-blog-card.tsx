@@ -17,7 +17,7 @@ export const VisitBlogCard = ({
   slug,
 }: VisitBlogCardType) => {
   return (
-    <FramerAnimate className="max-w-80 mx-auto w-full flex flex-col bg-white rounded-lg overflow-hidden">
+    <div className="max-w-80 mx-auto w-full flex flex-col bg-white rounded-lg overflow-hidden">
       <div className="relative w-full h-48">
         <Image src={imageUrl} alt="blog image" fill className="object-cover" />
       </div>
@@ -34,6 +34,6 @@ export const VisitBlogCard = ({
           </Button>
         </Link>
       </div>
-    </FramerAnimate>
+    </div>
   );
 };

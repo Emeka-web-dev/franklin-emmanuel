@@ -37,13 +37,13 @@ export const Brand = ({ brands }: Props) => {
             align: "start",
             loop: true,
           }}
-          className="w-full py-4"
+          className="w-full py-2"
         >
           <CarouselContent>
             {brands.map((value) => (
               <CarouselItem
                 key={value._key}
-                className="basis-1/2 sm:basis-1/3 lg:basis-1/4 flex items-center justify-center"
+                className="basis-1/3 lg:basis-1/4 flex items-center justify-center"
               >
                 <div className="p-1 cursor-grab">
                   <Image

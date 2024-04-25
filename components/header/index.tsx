@@ -76,7 +76,7 @@ export const Header = () => {
           >
             <Search className="w-5 h-5" />
           </Button>
-          <div className="flex md:hidden">
+          <div className="flex mr-2 md:hidden">
             <Button
               variant="ghost"
               size="icon"
