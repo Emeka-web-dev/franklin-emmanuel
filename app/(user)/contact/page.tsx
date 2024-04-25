@@ -1,6 +1,5 @@
 import { Schedule } from "@/components/schedule";
 import Link from "next/link";
-import React from "react";
 
 const ContactPage = () => {
   return (
@@ -12,14 +11,16 @@ const ContactPage = () => {
         <p className="max-w-2xl mx-auto text-center px-5">
           Thank you for your interest in contacting us. You can send us a
           message using the contact form below, or email{" "}
-          <Link href="mailto:emekarexchukwu@gmail.com" className="underline">
-            emekarexchukwu@gmail.com
+          <Link
+            href="mailto:franklinemmanuel30@gmail.com"
+            className="underline"
+          >
+            franklinemmanuel30@gmail.com
           </Link>{" "}
           and we’ll get back to you.
         </p>
       </div>
       <Schedule />
-      {/* <Address /> */}
     </article>
   );
 };

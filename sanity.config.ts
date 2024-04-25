@@ -3,7 +3,7 @@
  */
 
 import { visionTool } from "@sanity/vision";
-import { defineConfig } from "sanity";
+import { defineConfig, isDev } from "sanity";
 import { structureTool } from "sanity/structure";
 import { singletonTools } from "sanity-plugin-singleton-tools";
 
@@ -16,15 +16,14 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
-  // Add and edit the content schema in the './sanity/schema' folder
   schema,
-  plugins: [
-    structureTool(),
-    // Vision is a tool that lets you query your content with GROQ in the studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
-    singletonTools(),
-  ],
+  plugins: isDev
+    ? [
+        structureTool(),
+        visionTool({ defaultApiVersion: apiVersion }),
+        singletonTools(),
+      ]
+    : [structureTool(), singletonTools()],
   studio: {
     components: {
       navbar: StudioNavbar,
