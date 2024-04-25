@@ -149,7 +149,7 @@
 "use client";
 
 import { RotateCw, Search } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 import {
   CommandDialog,
@@ -157,7 +157,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-// import { useSearch } from "@/hooks/useSearch";
 import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import Link from "next/link";
@@ -166,13 +165,7 @@ import { useModalStore } from "@/hooks/useModalStore";
 import { searchQuery } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
-const query = groq`
-    *[_type == "post" && title match $value + "*"] | order(_createdAt desc){
-  title,
-    slug,
-    _id,
-}
-`;
+
 type ItemProp = {
   title: string;
   slug: {
@@ -188,9 +181,10 @@ type ItemProp = {
 export const SearchPostModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [input, setInput] = useState("");
   const [items, setItems] = useState<ItemProp[]>([]);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
 
-  //   const { isOpen, onClose } = useSearch();
   const { isOpen, onClose, type } = useModalStore();
 
   const isModalOpen = isOpen && type === "search";
@@ -202,36 +196,52 @@ export const SearchPostModal = () => {
     if (!isOpen) setItems([]);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!input?.trim()) return;
+
+    const delayDebounceFn = setTimeout(() => {
+      setIsLoading(true);
+      submitBtnRef?.current?.click();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [input]);
+
   if (!isMounted) {
     return null;
   }
 
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    const value = event.target.value;
-    if (value.length < 3) return;
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
     const posts: ItemProp[] = await client.fetch(searchQuery, {
-      value,
+      value: input,
       start: 0,
-      end: 6,
+      end: 15,
     });
     setItems(posts);
     setIsLoading(false);
   };
   return (
     <CommandDialog open={isModalOpen} onOpenChange={onClose}>
-      <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+      <form
+        onSubmit={onSubmit}
+        className="flex items-center border-b px-3"
+        cmdk-input-wrapper=""
+      >
         {isLoading ? (
           <RotateCw className="mr-2 h-4 w-4 shrink-0 opacity-50 animate-spin" />
         ) : (
           <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         )}
         <Input
-          onChange={handleChange}
+          onChange={(e) => setInput(e.target.value)}
+          value={input}
+          placeholder="Search posts, authors..."
           className="flex h-11 w-full rounded-md bg-transparent py-3 outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none ring-offset-0 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
         />
-      </div>
+        <button ref={submitBtnRef} type="submit" className="mr-4" />
+      </form>
       <CommandList>
         <CommandGroup>
           {items.length == 0 && (
@@ -267,5 +277,3 @@ export const SearchPostModal = () => {
     </CommandDialog>
   );
 };
-
-// export default SearchCommand;
